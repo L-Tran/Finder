@@ -5,17 +5,14 @@ public class GameViewer extends JFrame {
     // Instance Variables
     private Image Background;
     private Image getPlayer;
-    public final int SCREEN_WIDTH = 1500;
-    public final int SCREEN_HEIGHT = 1200;
+    public static final int SCREEN_WIDTH = 1500;
+    public static final int SCREEN_HEIGHT = 1200;
     private final int TITLE_BAR_HEIGHT = 23;
     private Game game;
-    private Player p;
 
     // Constructor
     public GameViewer(Game game, Player p) {
-        this.p = p;
         this.game = game;
-
         this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         this.setLocationRelativeTo(null);
         this.setTitle("Finder");
@@ -35,7 +32,7 @@ public class GameViewer extends JFrame {
         g.fillRect(0,  0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
         // Now have the ball draw itself on top of the White window.
-        p.draw(g);
+        game.getP().draw(g);
     }
 }
 

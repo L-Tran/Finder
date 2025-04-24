@@ -11,14 +11,14 @@ public class Game implements KeyListener, ActionListener {
     private Player p;
     private static final int SLEEP_TIME = 110;
     private static final int STEP_SIZE = 10;
-    private static  int DELAY_IN_MILLISECONDS = 5;
+    private static  int DELAY_IN_MILLISECONDS = 7;
     private Timer clock;
     private int isMoving;
 
     // Constructor
     public Game() {
-        p = new Player(window);
         this.window = new GameViewer(this, p);
+        p = new Player(window);
         window.addKeyListener(this);
         clock = new Timer(DELAY_IN_MILLISECONDS, this);
         clock.start();
@@ -26,6 +26,11 @@ public class Game implements KeyListener, ActionListener {
     }
 
     // Methods
+
+    public Player getP() {
+        return p;
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -36,16 +41,13 @@ public class Game implements KeyListener, ActionListener {
         switch(e.getKeyCode())
         {
             case KeyEvent.VK_LEFT:
-                isMoving = 0;
+                p.setDx(0);;
                 break;
             case KeyEvent.VK_RIGHT:
-                isMoving = 0;
+                p.setDx(0);;
                 break;
             case KeyEvent.VK_UP:
-                isMoving = 0;
-                break;
-            case KeyEvent.VK_DOWN:
-                isMoving = 0;
+                p.setDy(0);
                 break;
         }
     }
@@ -55,38 +57,19 @@ public class Game implements KeyListener, ActionListener {
         switch(e.getKeyCode())
         {
             case KeyEvent.VK_LEFT:
-                p.setImage(p.leftImage);
-                isMoving = -1;
+                p.setDx(-4);
                 break;
             case KeyEvent.VK_RIGHT:
-                p.setImage(p.rightImage);
-                isMoving = 1;
+                p.setDx(4);
                 break;
             case KeyEvent.VK_UP:
-                p.setImage(p.leftJumpImage);
-                isMoving = 2;
-                break;
-            case KeyEvent.VK_DOWN:
-                p.setImage(p.rightJumpImage);
-                isMoving = -2;
+                p.setDy(-20);
                 break;
         }
     }
 
     public void actionPerformed(ActionEvent e) {
-        if(isMoving == - 1) {
-            p.shiftX(-STEP_SIZE, 0, window.SCREEN_WIDTH);
-        }
-        else if(isMoving == 1) {
-            p.shiftX(STEP_SIZE, 0, window.SCREEN_WIDTH);
-        }
-        else if(isMoving == 2) {
-            int topOfPane = window.getInsets().top;
-            p.shiftY(-STEP_SIZE, topOfPane, window.SCREEN_HEIGHT);
-        }
-        else if(isMoving == -2) {
-            p.shiftY(STEP_SIZE, 0, window.SCREEN_HEIGHT);
-        }
+        p.move();
         window.repaint();
     }
 
