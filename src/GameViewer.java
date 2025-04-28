@@ -22,6 +22,12 @@ public class GameViewer extends JFrame {
     }
 
     // Methods
+
+
+    public Game getGame() {
+        return game;
+    }
+
     public void paint(Graphics g)
     {
         // Color the entire KeyListenerDemo window white
@@ -33,6 +39,10 @@ public class GameViewer extends JFrame {
 
         // Now have the ball draw itself on top of the White window.
         game.getP().draw(g);
+        g.setColor(Color.black);
+        for (int i = 0; i < 15; i++) {
+            game.getPlatforms().get(i).draw(g);
+        }
     }
 }
 

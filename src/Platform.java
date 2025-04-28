@@ -4,21 +4,26 @@ public class Platform {
 
     // Instance Variables
     GameViewer map;
-    int x, y, width, height;
-    int mapWidth;
-    int mapHeight;
+    public static final int PLATFORM_WIDTH = 200;
+    public static final int PLATFORM_HEIGHT = 10;
+    int x, y;
 
     // Constructor
-    public Platform(GameViewer map) {
+    public Platform(int x, int y, GameViewer map) {
+        this.x = x;
+        this.y = y;
         this.map = map;
     }
 
-    // Methods
-    public void bounce() {
+    public int getX() {
+        return x;
+    }
 
+    public int getY() {
+        return y;
     }
 
     public void draw(Graphics g) {
-
+        g.drawRect(x, y, PLATFORM_WIDTH, PLATFORM_HEIGHT);
     }
 }
