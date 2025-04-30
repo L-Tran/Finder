@@ -39,8 +39,8 @@ public class Game implements KeyListener, ActionListener {
     }
 
     public void makePlatforms() {
-        for (int i = 0; i < 15; i++) {
-            platforms.add(new Platform((int) (Math.random() * 1300 + 100),(int) (Math.random() * 1100), window));
+        for (int i = 0; i < 7; i++) {
+            platforms.add(new Platform((int) (Math.random() * 1500),(int) (Math.random() * 500 + 500), window));
         }
     }
 
@@ -75,13 +75,13 @@ public class Game implements KeyListener, ActionListener {
         switch(e.getKeyCode())
         {
             case KeyEvent.VK_LEFT:
-                p.setDx(-12);
+                p.setDx(-15);
                 break;
             case KeyEvent.VK_RIGHT:
-                p.setDx(12);
+                p.setDx(15);
                 break;
             case KeyEvent.VK_UP:
-                p.setDy(-30);
+                p.setDy(-40);
                 break;
         }
     }

@@ -47,26 +47,33 @@ public class Player {
         }
 
         if(y >= 1000) {
+            y = 1075 - height;
             dy = 0;
         }
         else {
-            falling = true;
             for (Platform p: map.getGame().getPlatforms()) {
                 if (isTouching(p)) {
                     falling = false;
                     break;
                 }
-            }
-            if (falling) {
-                y += dy;
-                dy += 6;
-                if (dy > 18) {
-                    dy = 12;
+                else {
+                    falling = true;
                 }
             }
-            else {
-                dy = 0;
+            gravity();
+        }
+    }
+
+    public void gravity() {
+        if (falling) {
+            y += dy;
+            dy += 6;
+            if (dy > 18) {
+                dy = 12;
             }
+        }
+        else {
+            dy = 0;
         }
     }
 
@@ -75,8 +82,8 @@ public class Player {
         int py = p.getY();
 
         boolean horizontallyAligned = x + width >= px && x <= px + Platform.PLATFORM_WIDTH;
-        boolean verticallyAligned = y + height >= py && y + height <= py + Platform.PLATFORM_HEIGHT;
-        return horizontallyAligned && verticallyAligned && dy > 0;
+        boolean verticallyAligned = y + height >= py && y <= py + Platform.PLATFORM_HEIGHT;
+        return horizontallyAligned && verticallyAligned;
     }
 
     public void setImage(Image newImage) {
