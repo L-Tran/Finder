@@ -39,9 +39,13 @@ public class Game implements KeyListener, ActionListener {
     }
 
     public void makePlatforms() {
-        for (int i = 0; i < 7; i++) {
-            platforms.add(new Platform((int) (Math.random() * 1500),(int) (Math.random() * 500 + 500), window));
-        }
+        platforms.add(new Platform((int) (Math.random() * 30),(int) (Math.random() * 500 + 500), window));
+        platforms.add(new Platform((int) (Math.random() * 30) + 215,(int) (Math.random() * 500 + 500), window));
+        platforms.add(new Platform((int) (Math.random() * 30) + 430,(int) (Math.random() * 500 + 500), window));
+        platforms.add(new Platform((int) (Math.random() * 30) + 645,(int) (Math.random() * 500 + 500), window));
+        platforms.add(new Platform((int) (Math.random() * 30) + 860,(int) (Math.random() * 500 + 500), window));
+        platforms.add(new Platform((int) (Math.random() * 30) + 1075,(int) (Math.random() * 500 + 500), window));
+        platforms.add(new Platform((int) (Math.random() * 30) + 1290,(int) (Math.random() * 500 + 500), window));
     }
 
     public ArrayList<Platform> getPlatforms() {
@@ -81,7 +85,10 @@ public class Game implements KeyListener, ActionListener {
                 p.setDx(15);
                 break;
             case KeyEvent.VK_UP:
-                p.setDy(-40);
+                if(p.getDy() == 0) {
+                    p.setDy(-80);
+                }
+
                 break;
         }
     }

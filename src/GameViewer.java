@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 
 public class GameViewer extends JFrame {
     // Instance Variables
@@ -13,36 +14,48 @@ public class GameViewer extends JFrame {
     // Constructor
     public GameViewer(Game game, Player p) {
         this.game = game;
-        this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setTitle("Finder");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         this.setVisible(true);
+        createBufferStrategy(2);
 
     }
 
     // Methods
 
-
     public Game getGame() {
         return game;
     }
 
-    public void paint(Graphics g)
-    {
-        // Color the entire KeyListenerDemo window white
+    public void paint(Graphics g) {
+        BufferStrategy bf = this.getBufferStrategy();
+        if (bf == null)
+            return;
+        Graphics g2 = null;
+        try {
+            g2 = bf.getDrawGraphics();
+            myPaint(g2);
+        }
+        finally {
+            g2.dispose();
+        }
+        bf.show();
+        Toolkit.getDefaultToolkit().sync();
+    }
+
+    public void myPaint(Graphics g) {
         // First set the Graphics Color "state" to WHITE
         g.setColor(Color.WHITE);
-
         // Because g.Color was set to WHITE, the rectangle will be WHITE
         g.fillRect(0,  0, SCREEN_WIDTH, SCREEN_HEIGHT);
-
-        // Now have the ball draw itself on top of the White window.
         game.getP().draw(g);
         g.setColor(Color.black);
-        for (int i = 0; i < 15; i++) {
-            game.getPlatforms().get(i).draw(g);
+        for (Platform p: game.getPlatforms()) {
+            p.draw(g);
         }
     }
+
 }
 

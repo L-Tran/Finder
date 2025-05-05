@@ -4,7 +4,7 @@ public class Platform {
 
     // Instance Variables
     GameViewer map;
-    public static final int PLATFORM_WIDTH = 300;
+    public static final int PLATFORM_WIDTH = 150;
     public static final int PLATFORM_HEIGHT = 20;
     int x, y;
 

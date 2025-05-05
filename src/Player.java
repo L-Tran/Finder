@@ -36,6 +36,10 @@ public class Player {
         this.dy = dy;
     }
 
+    public int getDy() {
+        return dy;
+    }
+
     public void move() {
         x += dx;
         y += dy;
@@ -52,7 +56,7 @@ public class Player {
         }
         else {
             for (Platform p: map.getGame().getPlatforms()) {
-                if (isTouching(p)) {
+                if (isTouching(p) && dy > 0) {
                     falling = false;
                     break;
                 }
@@ -83,7 +87,13 @@ public class Player {
 
         boolean horizontallyAligned = x + width >= px && x <= px + Platform.PLATFORM_WIDTH;
         boolean verticallyAligned = y + height >= py && y <= py + Platform.PLATFORM_HEIGHT;
-        return horizontallyAligned && verticallyAligned;
+        if(horizontallyAligned && verticallyAligned){
+            if (dy > 0) {
+                y = py - height;
+            }
+            return true;
+        }
+        return false;
     }
 
     public void setImage(Image newImage) {
