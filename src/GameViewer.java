@@ -3,32 +3,37 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 
 public class GameViewer extends JFrame {
-    // Instance Variables
-    private Image Background;
-    private Image getPlayer;
+
+    // Constants
     public static final int SCREEN_WIDTH = 1500;
     public static final int SCREEN_HEIGHT = 1200;
     private final int TITLE_BAR_HEIGHT = 23;
+
+    // Instance Variables
     private Game game;
 
     // Constructor
-    public GameViewer(Game game, Player p) {
+    public GameViewer(Game game) {
         this.game = game;
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
+
+        // Window setup
         this.setTitle("Finder");
         this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
-        createBufferStrategy(2);
 
+        // Double buffering
+        createBufferStrategy(2);
     }
 
-    // Methods
 
+    // Getter
     public Game getGame() {
         return game;
     }
 
+    // Handles repainting using double buffering
     public void paint(Graphics g) {
         BufferStrategy bf = this.getBufferStrategy();
         if (bf == null)
@@ -45,16 +50,53 @@ public class GameViewer extends JFrame {
         Toolkit.getDefaultToolkit().sync();
     }
 
+    // Paint method for background, player, and platforms
     public void myPaint(Graphics g) {
-        // First set the Graphics Color "state" to WHITE
+        // Clear the screen
         g.setColor(Color.WHITE);
-        // Because g.Color was set to WHITE, the rectangle will be WHITE
         g.fillRect(0,  0, SCREEN_WIDTH, SCREEN_HEIGHT);
-        game.getP().draw(g);
-        g.setColor(Color.black);
-        for (Platform p: game.getPlatforms()) {
-            p.draw(g);
+
+        int state = game.getGameState();
+        if (state == 1) {
+            // Instructions Screen
+            g.setColor(Color.BLACK);
+            g.setFont(new Font("Arial", Font.BOLD, 24));
+            g.drawString("INSTRUCTIONS", 100, 100);
+
+            g.setFont(new Font("Arial", Font.PLAIN, 18));
+            g.drawString("Use arrow keys to move and jump. Hold Jump to jump higher.", 100, 150);
+            g.drawString("Reach the red target to score.", 100, 180);
+            g.drawString("Avoid running out of time!", 100, 210);
+            g.drawString("Press ENTER to start.", 100, 260);
         }
+        else if (state == 2) {
+            // Draw player
+            game.getP().draw(g);
+
+            // Draw Target
+            g.setColor(Color.red);
+            game.getTarget().draw(g);
+
+            // Draw all platforms
+            g.setColor(Color.black);
+            for (Platform p: game.getPlatforms()) {
+                p.draw(g);
+            }
+
+            g.drawString("Time Left: " + game.getTimeLeft() / 11 + "s", 20, 40);
+            g.drawString("Score: " + game.getScore(), 20, 60);
+        }
+        else if (state == 3) {
+            // Game Over Screen
+            g.setColor(Color.RED);
+            g.setFont(new Font("Arial", Font.BOLD, 28));
+            g.drawString("GAME OVER", 100, 100);
+
+            g.setFont(new Font("Arial", Font.PLAIN, 18));
+            g.drawString("Final Score: " + game.getScore(), 100, 150);
+            g.drawString("Press space to play again",100, 170);
+        }
+
     }
 
 }
