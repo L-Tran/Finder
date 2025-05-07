@@ -18,15 +18,11 @@ public class Platform {
     }
 
     // Getters
-    public int getX() {
-        return x;
-    }
+    public int getX() {return x;}
 
-    public int getY() {
-        return y;
-    }
+    public int getY() {return y;}
 
-    // Draws the platform
+    // Draw the platform
     public void draw(Graphics g) {
         g.drawRect(x, y, PLATFORM_WIDTH, PLATFORM_HEIGHT);
     }

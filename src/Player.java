@@ -6,7 +6,6 @@ public class Player {
     // Constants
     public static final int WIDTH = 50;
     public static final int HEIGHT = 75;
-    private static final int JUMP_FORCE = -80;
     private static final int GRAVITY_INCREMENT = 6;
     private static final int MAX_FALL_SPEED = 12;
 
@@ -21,7 +20,7 @@ public class Player {
     public Player(GameViewer map) {
         this.map = map;
 
-        // Set default position
+        // Set Spawn position
         x = 500;
         y = 1500;
         falling = true;
@@ -33,39 +32,17 @@ public class Player {
     }
 
     // Getters & Setters
+    public int getX() {return x;}
 
+    public int getY() {return y;}
 
-    public int getX() {
-        return x;
-    }
+    public void setDx(int dx) {this.dx = dx;}
 
-    public int getY() {
-        return y;
-    }
+    public void setDy(int dy) {this.dy = dy;}
 
-    public void setDx(int dx) {
-        this.dx = dx;
-    }
+    public void setJumping(boolean jumping) {this.jumping = jumping;}
 
-    public void setDy(int dy) {
-        this.dy = dy;
-    }
-
-    public void setJumping(boolean jumping) {
-        this.jumping = jumping;
-    }
-
-    public int getDx() {
-        return dx;
-    }
-
-    public int getDy() {
-        return dy;
-    }
-
-    public boolean isJumping() {
-        return jumping;
-    }
+    public boolean isJumping() {return jumping;}
 
     // Updates player position
     public void move() {

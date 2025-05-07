@@ -50,53 +50,82 @@ public class GameViewer extends JFrame {
         Toolkit.getDefaultToolkit().sync();
     }
 
-    // Paint method for background, player, and platforms
+    // Paint method for background, player, and platforms depending on game state
     public void myPaint(Graphics g) {
         // Clear the screen
         g.setColor(Color.WHITE);
         g.fillRect(0,  0, SCREEN_WIDTH, SCREEN_HEIGHT);
-
+        // Get game state
         int state = game.getGameState();
+        // Instructions screen
         if (state == 1) {
             // Instructions Screen
-            g.setColor(Color.BLACK);
-            g.setFont(new Font("Arial", Font.BOLD, 24));
-            g.drawString("INSTRUCTIONS", 100, 100);
-
-            g.setFont(new Font("Arial", Font.PLAIN, 18));
-            g.drawString("Use arrow keys to move and jump. Hold Jump to jump higher.", 100, 150);
-            g.drawString("Reach the red target to score.", 100, 180);
-            g.drawString("Avoid running out of time!", 100, 210);
-            g.drawString("Press ENTER to start.", 100, 260);
+            printInstructions(g);
         }
         else if (state == 2) {
             // Draw player
-            game.getP().draw(g);
-
+            paintPlayer(g);
             // Draw Target
-            g.setColor(Color.red);
-            game.getTarget().draw(g);
-
+            paintTarget(g);
             // Draw all platforms
-            g.setColor(Color.black);
-            for (Platform p: game.getPlatforms()) {
-                p.draw(g);
-            }
-
-            g.drawString("Time Left: " + game.getTimeLeft() / 11 + "s", 20, 40);
-            g.drawString("Score: " + game.getScore(), 20, 60);
+            paintPlatforms(g);
+            // Update timer and score
+            paintInfo(g);
         }
         else if (state == 3) {
             // Game Over Screen
-            g.setColor(Color.RED);
-            g.setFont(new Font("Arial", Font.BOLD, 28));
-            g.drawString("GAME OVER", 100, 100);
-
-            g.setFont(new Font("Arial", Font.PLAIN, 18));
-            g.drawString("Final Score: " + game.getScore(), 100, 150);
-            g.drawString("Press space to play again",100, 170);
+            gameOver(g);
         }
 
+    }
+
+    // Print instructions
+    public void printInstructions(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.BOLD, 24));
+        g.drawString("INSTRUCTIONS", 100, 100);
+        g.setFont(new Font("Arial", Font.PLAIN, 18));
+        g.drawString("Use arrow keys to move and jump. Hold Jump to jump higher.", 100, 150);
+        g.drawString("Reach the red target to score.", 100, 180);
+        g.drawString("Avoid running out of time!", 100, 210);
+        g.drawString("Press ENTER to start.", 100, 260);
+    }
+
+    // Draw player
+    public void paintPlayer(Graphics g) {
+        game.getP().draw(g);
+    }
+
+    // Draw target
+    public void paintTarget(Graphics g) {
+        g.setColor(Color.red);
+        game.getTarget().draw(g);
+    }
+
+    // Draw platforms
+    public void paintPlatforms(Graphics g) {
+        g.setColor(Color.black);
+        for (Platform p: game.getPlatforms()) {
+            p.draw(g);
+        }
+    }
+
+    // Update info
+    public void paintInfo(Graphics g) {
+        g.setFont(new Font("Arial", Font.BOLD, 32));
+        g.drawString("Time Left: " + game.getTimeLeft() / 11 + "s", 20, 55);
+        g.drawString("Score: " + game.getScore(), 20, 85);
+    }
+
+    // Paint game over screen
+    public void gameOver(Graphics g) {
+        g.setColor(Color.RED);
+        g.setFont(new Font("Arial", Font.BOLD, 28));
+        g.drawString("GAME OVER", 100, 100);
+
+        g.setFont(new Font("Arial", Font.PLAIN, 18));
+        g.drawString("Final Score: " + game.getScore(), 100, 150);
+        g.drawString("Press space to play again",100, 170);
     }
 
 }
